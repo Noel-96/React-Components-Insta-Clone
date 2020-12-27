@@ -20,6 +20,7 @@ const App = () => {
 
   const [posts, setPosts ] =  useState(dummyData)
   const [search, setSearch] = useState('');
+  
 
   const likePost = postId => {
     /*
@@ -45,6 +46,17 @@ const App = () => {
 
   };
 
+  const filterPost = (search) => {
+  
+    const filteredPosts = posts.filter( post => {
+    const username = post.username.toLowerCase();
+    const searchText = search.toLowerCase().trim();
+    //setPosts(filteredPosts); // cannot redefine posts within the filter, because you need it to filter the entire posts array
+    return (username.includes(searchText));
+  })
+        setPosts(filteredPosts)
+};
+
 
 
   return (
@@ -52,7 +64,7 @@ const App = () => {
 
       {/* Add SearchBar and Posts here to render them */}
       {/* Check the implementation of each component, to see what props they require, if any! */}
-      <SearchBar search={search}/>
+      <SearchBar filterPost = {filterPost} search={search}/>
       <Posts likePost={likePost} posts={posts}/>
     </div>
   );
